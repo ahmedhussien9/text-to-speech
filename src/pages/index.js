@@ -22,24 +22,20 @@ export default function Home() {
   const [isSpeaking, setSpeaking] = useState(false)
   const speak = () => {
     let speech = new SpeechSynthesisUtterance()
-    console.log("Clicked")
     // Handle pause speaking
     if (isSpeaking && !isPaused) {
-      console.log(isSpeaking, isPaused)
       pauseSpeaking()
       setIsPaused(true)
       return
     }
     // Handle resume speaking again
     if (isSpeaking && isPaused) {
-      console.log(isSpeaking, isPaused)
       resumeSpeaking()
       setIsPaused(false)
       return
     }
     console.log("Clicked 1 speak")
     // Speaking for first time
-    console.log(isSpeaking, isPaused)
     turnOnSpeaking(speech)
   }
 
@@ -85,13 +81,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    let timeOut = setTimeout(() => {
-      const voicesList = speechSynthesis.getVoices()
-      setVoices(voicesList)
-      return () => {
-        clearTimeout(timeOut)
-      }
-    }, 140)
+    const voicesList = window.speechSynthesis.getVoices();
+    // localStorage.setItem("voices_list", JSON.parse(voicesList))
+    setVoices(voicesList)
   }, [])
 
   const sendMessage = message => {

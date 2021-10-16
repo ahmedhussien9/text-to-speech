@@ -81,8 +81,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const voicesList = window.speechSynthesis.getVoices();
-    // localStorage.setItem("voices_list", JSON.parse(voicesList))
+    const voicesList = window.speechSynthesis.getVoices()
     setVoices(voicesList)
   }, [])
 
@@ -187,28 +186,32 @@ export default function Home() {
         {/** End Voice Controls*/}
         {/* Start Voice List & text */}
         <div className={styles.speechContainer}>
-          <div className={styles.languageContainer}>
-            <h6 className={styles.controlLabel}>Select Language</h6>
-            <select
-              className={styles.select}
-              onChange={event => onChangeVoice(event.target.value)}
-            >
-              {voices &&
-                voices.length > 0 &&
-                voices.map((voice, key) => {
-                  return (
-                    <option key={key} value={voice.lang}>
-                      {voice.name}
-                    </option>
-                  )
-                })}
-            </select>
-          </div>
+          {voices && voices.length ? (
+            <div className={styles.languageContainer}>
+              <h6 className={styles.controlLabel}>Select Language</h6>
+              <select
+                className={styles.select}
+                onChange={event => onChangeVoice(event.target.value)}
+              >
+                {voices &&
+                  voices.length > 0 &&
+                  voices.map((voice, key) => {
+                    return (
+                      <option key={key} value={voice.lang}>
+                        {voice.name}
+                      </option>
+                    )
+                  })}
+              </select>
+            </div>
+          ) : (
+            ""
+          )}
 
           <textarea
             className={styles.textArea}
             name="message"
-            rows="5"
+            rows="8"
             placeholder="Please write something here and click on play button.."
             column="5"
             onChange={event => sendMessage(event.target.value)}
